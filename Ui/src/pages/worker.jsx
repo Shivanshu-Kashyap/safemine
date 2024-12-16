@@ -25,34 +25,34 @@ const WorkerForm = () => {
     };
 
     // Submit form data
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const response = await axios.post('/api/v1/workers', workerDetails);
-    //         if (response.status === 201) {
-    //             setSuccessMessage('Worker saved successfully!');
-    //             setError('');
-    //             // Reset all fields except `contactNumber` if desired
-    //             setWorkerDetails({
-    //                 firstName: '',
-    //                 lastName: '',
-    //                 email: '',
-    //                 age: '',
-    //                 designation: '',
-    //                 shift: '',
-    //                 contactNumber: workerDetails.contactNumber, // Retain this
-    //                 emergencyContact: '',
-    //                 address: '',
-    //             });
-    //         }
-    //     } catch (error) {
-    //         const errorMessage =
-    //             error.response?.data?.message ||
-    //             'An error occurred while submitting the form.';
-    //         setError(errorMessage);
-    //         setSuccessMessage('');
-    //     }
-    // };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/api/v1/workers', workerDetails);
+            if (response.status === 201) {
+                setSuccessMessage('Worker saved successfully!');
+                setError('');
+                // Reset all fields except `contactNumber` if desired
+                setWorkerDetails({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    age: '',
+                    designation: '',
+                    shift: '',
+                    contactNumber: workerDetails.contactNumber, // Retain this
+                    emergencyContact: '',
+                    address: '',
+                });
+            }
+        } catch (error) {
+            const errorMessage =
+                error.response?.data?.message ||
+                'An error occurred while submitting the form.';
+            setError(errorMessage);
+            setSuccessMessage('');
+        }
+    };
 
     return (
         <div className="max-w-4xl mx-auto p-6 relative bg-white shadow-md rounded-lg">

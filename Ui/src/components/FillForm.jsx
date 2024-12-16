@@ -1,6 +1,6 @@
 import React, {useState}from 'react';
 import { Link } from 'react-router-dom';
-import WorkerForm from '../pages/worker';
+import WorkerForm from '../pages/worker.jsx';
 const FillForm = () => {
     const [selectedForm, setSelectedForm] = useState(null);
 
