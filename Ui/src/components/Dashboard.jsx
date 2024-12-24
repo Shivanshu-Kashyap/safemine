@@ -14,7 +14,7 @@ import {
 import WebLogo from '../assets/Web_Logo.png'; // Path to the Safe Mine logo
 import IntroImage from '../assets/INTRO__Coal.png'; // Path to the intro image
 import FillForm from './FillForm'; // Import the FillForm component
-
+import WorkerReport from '../pages/WorkerReport';
 const Dashboard = () => {
   const [activeContent, setActiveContent] = useState('dashboard'); // State to manage active content
 
@@ -47,7 +47,7 @@ const Dashboard = () => {
       case 'observation':
         return <div>Observation Content</div>;
       case 'reports':
-        return <div>Reports Content</div>;
+        return <WorkerReport/>;
       case 'attendance':
         return <div>Attendance Content</div>;
       case 'history':
@@ -110,7 +110,7 @@ const Dashboard = () => {
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 p-3 rounded-md transition-transform"
             >
               <FaChartBar />
-              <span>Reports</span>
+              <span>Worker-Reports</span>
             </button>
             <button
               onClick={() => setActiveContent('attendance')}

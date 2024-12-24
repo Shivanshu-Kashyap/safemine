@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const WorkerForm = () => {
+const WorkerForm = ({ onAddWorker }) => {
     const [workerDetails, setWorkerDetails] = useState({
         firstName: '',
         lastName: '',
@@ -32,7 +32,7 @@ const WorkerForm = () => {
             if (response.status === 201) {
                 setSuccessMessage('Worker saved successfully!');
                 setError('');
-                // Reset all fields except `contactNumber` if desired
+                // Reset form except for `contactNumber`
                 setWorkerDetails({
                     firstName: '',
                     lastName: '',
@@ -40,15 +40,15 @@ const WorkerForm = () => {
                     age: '',
                     designation: '',
                     shift: '',
-                    contactNumber: workerDetails.contactNumber, // Retain this
+                    contactNumber: workerDetails.contactNumber, // Keep contactNumber after reset
                     emergencyContact: '',
                     address: '',
                 });
+                // Pass the new worker data to parent
+                onAddWorker(workerDetails);
             }
         } catch (error) {
-            const errorMessage =
-                error.response?.data?.message ||
-                'An error occurred while submitting the form.';
+            const errorMessage = error.response?.data?.message || 'An error occurred while submitting the form.';
             setError(errorMessage);
             setSuccessMessage('');
         }
@@ -75,7 +75,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Last Name */}
                 <div>
                     <label htmlFor="lastName" className="block text-gray-700 font-medium mb-2">Last Name:</label>
                     <input
@@ -89,7 +88,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Email */}
                 <div>
                     <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email:</label>
                     <input
@@ -103,7 +101,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Age */}
                 <div>
                     <label htmlFor="age" className="block text-gray-700 font-medium mb-2">Age:</label>
                     <input
@@ -113,12 +110,11 @@ const WorkerForm = () => {
                         value={workerDetails.age}
                         onChange={handleChange}
                         required
-                        min="18" // Example validation
+                        min="18"
                         className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                {/* Designation */}
                 <div>
                     <label htmlFor="designation" className="block text-gray-700 font-medium mb-2">Designation:</label>
                     <input
@@ -132,7 +128,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Shift */}
                 <div>
                     <label htmlFor="shift" className="block text-gray-700 font-medium mb-2">Shift:</label>
                     <input
@@ -146,7 +141,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Contact Number */}
                 <div>
                     <label htmlFor="contactNumber" className="block text-gray-700 font-medium mb-2">Contact Number:</label>
                     <input
@@ -156,12 +150,11 @@ const WorkerForm = () => {
                         value={workerDetails.contactNumber}
                         onChange={handleChange}
                         required
-                        pattern="\d{10}" // Example validation for a 10-digit number
+                        pattern="\d{10}"
                         className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                {/* Emergency Contact */}
                 <div>
                     <label htmlFor="emergencyContact" className="block text-gray-700 font-medium mb-2">Emergency Contact:</label>
                     <input
@@ -175,7 +168,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Address */}
                 <div>
                     <label htmlFor="address" className="block text-gray-700 font-medium mb-2">Address:</label>
                     <input
@@ -189,7 +181,6 @@ const WorkerForm = () => {
                     />
                 </div>
 
-                {/* Submit Button */}
                 <button
                     type="submit"
                     className="self-start bg-[#D4B030] text-white py-2 px-6 rounded-lg shadow-md hover:bg-[#B09C1A]"
