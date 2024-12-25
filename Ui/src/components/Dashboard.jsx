@@ -17,6 +17,7 @@ import FillForm from './FillForm'; // Import the FillForm component
 import WorkerReport from '../pages/WorkerReport';
 import DetailFetchForm from '../pages/DetailFetchForm';
 import ObservationPage from '../pages/Observation';
+import ContactUs from '../pages/Contact';
 
 const Dashboard = () => {
   const [activeContent, setActiveContent] = useState('dashboard'); // State to manage active content
@@ -38,7 +39,10 @@ const Dashboard = () => {
             <p className="text-gray-500 mb-4">
               Fortunately, it’s very easy to create one.
             </p>
-            <button className="px-6 py-2 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300">
+            <button
+              onClick={() => setActiveContent('observation')}
+              className="px-6 py-2 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300"
+            >
               Get Started
             </button>
           </div>
@@ -46,9 +50,9 @@ const Dashboard = () => {
       case 'fill-form':
         return <FillForm />;
       case 'rounds':
-        return <DetailFetchForm/>;
+        return <DetailFetchForm />;
       case 'observation':
-        return <ObservationPage/>;
+        return <ObservationPage />;
       case 'reports':
         return <WorkerReport />;
       case 'attendance':
@@ -58,9 +62,11 @@ const Dashboard = () => {
       case 'settings':
         return <div>Settings Content</div>;
       case 'support':
-        return <div>Support Content</div>;
+        return <ContactUs/>;
       case 'exit':
-        return <div>Exit Content</div>;
+        // Redirect to Home page outside Dashboard
+        window.location.href = '/';
+        return null;
       default:
         return <div>Page Not Found</div>;
     }
@@ -99,7 +105,7 @@ const Dashboard = () => {
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 p-3 rounded-md transition-transform"
             >
               <FaClipboardList />
-              <span>Rounds</span>
+              <span>Update</span>
             </button>
             <button
               onClick={() => setActiveContent('observation')}
