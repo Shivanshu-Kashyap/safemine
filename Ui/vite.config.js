@@ -7,6 +7,7 @@ export default defineConfig({
     proxy: {
       '/api/v1/users': 'http://localhost:8002', // Backend API URL
       '/api/v1/workers': 'http://localhost:8002', // Backend API URL
+      '/api/v1/details': 'http://localhost:8002',
     },
   },
   plugins: [react()],

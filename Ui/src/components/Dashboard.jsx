@@ -15,6 +15,8 @@ import WebLogo from '../assets/Web_Logo.png'; // Path to the Safe Mine logo
 import IntroImage from '../assets/INTRO__Coal.png'; // Path to the intro image
 import FillForm from './FillForm'; // Import the FillForm component
 import WorkerReport from '../pages/WorkerReport';
+import DetailFetchForm from '../pages/DetailFetchForm';
+import ObservationPage from '../pages/Observation';
 
 const Dashboard = () => {
   const [activeContent, setActiveContent] = useState('dashboard'); // State to manage active content
@@ -44,9 +46,9 @@ const Dashboard = () => {
       case 'fill-form':
         return <FillForm />;
       case 'rounds':
-        return <div>Rounds Content</div>;
+        return <DetailFetchForm/>;
       case 'observation':
-        return <div>Observation Content</div>;
+        return <ObservationPage/>;
       case 'reports':
         return <WorkerReport />;
       case 'attendance':

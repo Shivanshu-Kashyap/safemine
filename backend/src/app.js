@@ -10,7 +10,7 @@ const app = express();
 // CORS configuration to allow cross-origin requests
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // fallback to local dev URL if not set
+    origin: process.env.CORS_ORIGIN || '8002', // fallback to local dev URL if not set
     credentials: true,
   })
 );
@@ -23,10 +23,12 @@ app.use(cookieParser());
 // Import routes
 import userRouter from "./routes/user.routes.js";
 import workerRouter from "./routes/worker.routes.js"; // Import worker router
+import detailRouter from "./routes/detail.routes.js";
 
 // Declare routes
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/workers", workerRouter); // Add worker routes
+app.use("/api/v1/workers", workerRouter);
+app.use("/api/v1/details", detailRouter); 
 
 // Export app for server initialization
 export { app };

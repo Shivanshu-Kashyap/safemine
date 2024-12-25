@@ -1,6 +1,7 @@
 import React, {useState}from 'react';
 import { Link } from 'react-router-dom';
 import WorkerForm from '../pages/worker.jsx';
+import DetailForm from '../pages/Detail.jsx';
 const FillForm = () => {
     const [selectedForm, setSelectedForm] = useState(null);
 
@@ -31,7 +32,7 @@ const FillForm = () => {
 
             {/* Main Content */}
             <div className="w-3/4 p-6">
-                {selectedForm === 'detail' && <div>Detail Form Content</div>}
+                {selectedForm === 'detail' && <div><DetailForm/></div>}
                 {selectedForm === 'worker' && <WorkerForm />}
             </div>
         </div>
