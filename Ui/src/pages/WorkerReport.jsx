@@ -1,9 +1,36 @@
-import React, { useContext, useEffect, useState } from "react";
-import { WorkerContext } from "../context/WorkerContext";
+import React, { useEffect, useState } from "react";
 
 const WorkerReport = () => {
-  const { workers, fetchWorkers, loading, error } = useContext(WorkerContext);
   const [cachedWorkers, setCachedWorkers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch workers from the backend
+  const fetchWorkers = async () => {
+    try {
+      const response = await fetch("/api/v1/workers");
+      if (!response.ok) throw new Error("Failed to fetch workers.");
+      const responseData = await response.json();
+      console.log("API Response:", responseData); // Debugging the response
+
+      // Ensure we access the correct array of workers
+      const workersArray = responseData.data || [];
+      const formattedWorkers = workersArray.map(worker => ({
+        firstName: worker.firstName,
+        lastName: worker.lastName,
+        age: worker.age, // Assuming age is already in a usable format
+        designation: worker.designation,
+        contactNumber: worker.contactNumber,
+      }));
+
+      setCachedWorkers(formattedWorkers);
+      localStorage.setItem("workers", JSON.stringify(formattedWorkers));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Load data from localStorage initially
   useEffect(() => {
@@ -11,30 +38,15 @@ const WorkerReport = () => {
     if (savedWorkers) {
       setCachedWorkers(JSON.parse(savedWorkers));
     }
+    fetchWorkers();
   }, []);
-
-  // Fetch and update workers from the database, then update localStorage
-  useEffect(() => {
-    const loadWorkers = async () => {
-      await fetchWorkers(); // Fetch from the database
-    };
-    loadWorkers();
-  }, [fetchWorkers]);
-
-  useEffect(() => {
-    if (workers.length > 0) {
-      localStorage.setItem("workers", JSON.stringify(workers)); // Update cache
-      setCachedWorkers(workers); // Update UI
-    }
-  }, [workers]);
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold text-center mb-6">Worker Report</h1>
+      <h1 className="text-3xl font-semibold text-center mb-6">Worker Reports</h1>
       {loading && <p className="text-center">Loading workers...</p>}
       {error && <p className="text-red-500 text-center">{error}</p>}
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Worker List</h2>
         <table className="min-w-full border-collapse">
           <thead className="bg-gray-100">
             <tr>
