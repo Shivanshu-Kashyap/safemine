@@ -15,6 +15,7 @@ import WebLogo from '../assets/Web_Logo.png'; // Path to the Safe Mine logo
 import IntroImage from '../assets/INTRO__Coal.png'; // Path to the intro image
 import FillForm from './FillForm'; // Import the FillForm component
 import WorkerReport from '../pages/WorkerReport';
+
 const Dashboard = () => {
   const [activeContent, setActiveContent] = useState('dashboard'); // State to manage active content
 
@@ -47,7 +48,7 @@ const Dashboard = () => {
       case 'observation':
         return <div>Observation Content</div>;
       case 'reports':
-        return <WorkerReport/>;
+        return <WorkerReport />;
       case 'attendance':
         return <div>Attendance Content</div>;
       case 'history':
@@ -64,18 +65,18 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen">
       {/* Topbar */}
       <header className="bg-white p-4 shadow-md flex justify-between items-center">
         <div className="flex items-center space-x-4">
-          <img src={WebLogo} alt="Logo" className="h-24" />
+          <img src={WebLogo} alt="Logo" className="h-16 object-contain" />
         </div>
       </header>
 
       {/* Main Layout */}
-      <div className="flex flex-1">
+      <div className="flex flex-1 min-h-0 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-1/4 bg-white p-6 shadow-md space-y-6">
+        <aside className="w-64 bg-white p-6 shadow-md flex-shrink-0 overflow-y-auto">
           <nav className="flex flex-col space-y-4">
             <button
               onClick={() => setActiveContent('dashboard')}
@@ -110,7 +111,7 @@ const Dashboard = () => {
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-500 p-3 rounded-md transition-transform"
             >
               <FaChartBar />
-              <span>Worker-Reports</span>
+              <span>Worker Reports</span>
             </button>
             <button
               onClick={() => setActiveContent('attendance')}
@@ -153,7 +154,7 @@ const Dashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 p-8 bg-gray-100">{renderContent()}</div>
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-100">{renderContent()}</div>
       </div>
     </div>
   );
