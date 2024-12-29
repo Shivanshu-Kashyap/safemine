@@ -13,7 +13,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     // Increase the chunk size warning limit if needed
-    chunkSizeWarningLimit: 1000, // (default is 500 KB)
+    chunkSizeWarningLimit: 1000,
+    outDir: 'dist', // (default is 500 KB)
 
     rollupOptions: {
       output: {
