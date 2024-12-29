@@ -11,4 +11,26 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  build: {
+    // Increase the chunk size warning limit if needed
+    chunkSizeWarningLimit: 1000, // (default is 500 KB)
+
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Manually split large node_modules packages into separate chunks
+          if (id.includes('node_modules')) {
+            // Example: Split libraries like react, lodash, etc., into separate chunks
+            if (id.includes('react')) {
+              return 'react';
+            }
+            if (id.includes('axios')) {
+              return 'axios';
+            }
+            return 'vendor'; // Catch-all for other dependencies
+          }
+        },
+      },
+    },
+  },
 });
