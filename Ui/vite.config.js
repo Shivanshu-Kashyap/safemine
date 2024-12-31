@@ -5,30 +5,26 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   server: {
     proxy: {
-      '/api/v1/users': 'http://localhost:8002', // Backend API URL
-      '/api/v1/workers': 'http://localhost:8002', // Backend API URL
-      '/api/v1/details': 'http://localhost:8002',
+      '/api/v1/users': process.env.NODE_ENV === 'development' ? 'http://localhost:8002' : 'https://safemine.onrender.com', // Backend API URL
+      '/api/v1/workers': process.env.NODE_ENV === 'development' ? 'http://localhost:8002' : 'https://safemine.onrender.com',
+      '/api/v1/details': process.env.NODE_ENV === 'development' ? 'http://localhost:8002' : 'https://safemine.onrender.com',
     },
   },
   plugins: [react()],
   build: {
-    // Increase the chunk size warning limit if needed
     chunkSizeWarningLimit: 1000,
-    outDir: 'dist', // (default is 500 KB)
-
+    outDir: 'dist',
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Manually split large node_modules packages into separate chunks
           if (id.includes('node_modules')) {
-            // Example: Split libraries like react, lodash, etc., into separate chunks
             if (id.includes('react')) {
               return 'react';
             }
             if (id.includes('axios')) {
               return 'axios';
             }
-            return 'vendor'; // Catch-all for other dependencies
+            return 'vendor';
           }
         },
       },
