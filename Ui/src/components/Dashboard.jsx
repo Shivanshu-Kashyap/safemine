@@ -11,6 +11,7 @@ import {
   FaHeadset,
   FaSignOutAlt,
 } from 'react-icons/fa';
+import { HiOutlineMenuAlt3, HiOutlineX } from 'react-icons/hi'; // Import hamburger and close icons
 import WebLogo from '../assets/Web_Logo.png'; // Path to the Safe Mine logo
 import IntroImage from '../assets/INTRO__Coal.png'; // Path to the intro image
 import FillForm from './FillForm'; // Import the FillForm component
@@ -20,9 +21,9 @@ import ObservationPage from '../pages/Observation';
 import ContactUs from '../pages/Contact';
 
 const Dashboard = () => {
-  const [activeContent, setActiveContent] = useState('dashboard'); // State to manage active content
+  const [activeContent, setActiveContent] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false); // State for sidebar toggle
 
-  // Function to render content based on active state
   const renderContent = () => {
     switch (activeContent) {
       case 'dashboard':
@@ -62,9 +63,8 @@ const Dashboard = () => {
       case 'settings':
         return <div>Settings Content</div>;
       case 'support':
-        return <ContactUs/>;
+        return <ContactUs />;
       case 'exit':
-        // Redirect to Home page outside Dashboard
         window.location.href = '/';
         return null;
       default:
@@ -75,16 +75,27 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col h-screen">
       {/* Topbar */}
-      <header className="bg-white p-4 shadow-md flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <img src={WebLogo} alt="Logo" className="h-16 object-contain" />
-        </div>
+      <header className="bg-white p-4 shadow-md flex justify-between items-center md:px-6">
+        <img src={WebLogo} alt="Logo" className="h-10 object-contain" />
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="md:hidden text-gray-700 focus:outline-none"
+        >
+          {sidebarOpen ? (
+            <HiOutlineX className="text-2xl" /> // Close (cut) icon
+          ) : (
+            <HiOutlineMenuAlt3 className="text-2xl" /> // Hamburger icon
+          )}
+        </button>
       </header>
 
-      {/* Main Layout */}
       <div className="flex flex-1 min-h-0 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white p-6 shadow-md flex-shrink-0 overflow-y-auto">
+        <aside
+          className={`${
+            sidebarOpen ? 'block' : 'hidden'
+          } md:block w-64 bg-white p-6 shadow-md flex-shrink-0 overflow-y-auto`}
+        >
           <nav className="flex flex-col space-y-4">
             <button
               onClick={() => setActiveContent('dashboard')}
@@ -135,7 +146,6 @@ const Dashboard = () => {
               <FaHistory />
               <span>History</span>
             </button>
-            {/* Divider */}
             <hr className="border-t border-gray-300 my-4" />
             <button
               onClick={() => setActiveContent('settings')}

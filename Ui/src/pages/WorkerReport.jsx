@@ -43,24 +43,28 @@ const WorkerReport = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold text-center mb-6">Worker Reports</h1>
-      {loading && <p className="text-center">Loading workers...</p>}
-      {error && <p className="text-red-500 text-center">{error}</p>}
-      <div className="mt-8">
-        <table className="min-w-full border-collapse">
-          <thead className="bg-gray-100">
+      <h1 className="text-3xl font-semibold text-center text-[#D4B030] mb-6">Worker Reports</h1>
+      
+      {/* Error & Loading states */}
+      {loading && <p className="text-center text-[#D4B030]">Loading workers...</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
+
+      {/* Table Section */}
+      <div className="overflow-x-auto mt-8">
+        <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+          <thead className="bg-blue-100">
             <tr>
-              <th className="border px-4 py-2">First Name</th>
-              <th className="border px-4 py-2">Last Name</th>
-              <th className="border px-4 py-2">Age</th>
-              <th className="border px-4 py-2">Designation</th>
-              <th className="border px-4 py-2">Contact Number</th>
+              <th className="border px-4 py-2 text-[#D4B030] text-left">First Name</th>
+              <th className="border px-4 py-2 text-[#D4B030] text-left">Last Name</th>
+              <th className="border px-4 py-2 text-[#D4B030] text-left">Age</th>
+              <th className="border px-4 py-2 text-[#D4B030] text-left">Designation</th>
+              <th className="border px-4 py-2 text-[#D4B030] text-left">Contact Number</th>
             </tr>
           </thead>
           <tbody>
             {cachedWorkers.length > 0 ? (
               cachedWorkers.map((worker, index) => (
-                <tr key={index}>
+                <tr key={index} className="border-b hover:bg-gray-50">
                   <td className="border px-4 py-2">{worker.firstName}</td>
                   <td className="border px-4 py-2">{worker.lastName}</td>
                   <td className="border px-4 py-2">{worker.age}</td>
